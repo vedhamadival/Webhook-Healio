@@ -23,12 +23,12 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 // Endpoint to receive webhooks
 app.post('/webhook', async (req, res) => {
   try {
-    const { event, payload } = req.body;
+    const { triggerEvent, payload } = req.body;
 
     // Save the webhook data to the database
-    const webhook = new Webhook({ event, payload });
+    const webhook = new Webhook({ event: triggerEvent, payload });
     await webhook.save();
-    res.json('Post Request')
+
     res.status(200).send('Webhook received successfully');
   } catch (error) {
     console.error('Error processing webhook:', error);
