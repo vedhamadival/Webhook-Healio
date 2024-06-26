@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 // MongoDB Schema and Model
 const webhookSchema = new mongoose.Schema({
-  event: String,
+  triggerEvent: String,
   payload: Object,
   receivedAt: { type: Date, default: Date.now }
 });
@@ -26,7 +26,7 @@ app.post('/webhook', async (req, res) => {
     const { triggerEvent, payload } = req.body;
 
     // Save the webhook data to the database
-    const webhook = new Webhook({ event: triggerEvent, payload });
+    const webhook = new Webhook({ triggerEvent, payload });
     await webhook.save();
 
     res.status(200).send('Webhook received successfully');
